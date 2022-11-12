@@ -3,16 +3,18 @@ import PySimpleGUI as sg
 
 sg.theme("Darkblue")
 
-layout = ([sg.Text("Vítá Vás Label Maker",text_color="", font=("", 16), justification="center")],
-          [sg.Text("Jak chcete zadat štítky? ")],
-          [sg.Button("zadat ručně")],
-          [sg.FileBrowse("Načíst ze soboru")],
-          [sg.Button("Cancel")])
+layout = ([sg.Text("Vítá Vás Label Maker",text_color="", font=("", 16), justification="Center")],
+          [sg.Text("")],
+          [sg.Push(), sg.Text("Jak chcete zadat štítky? ", font=(", 14")), sg.Push()],
+          [sg.Push(), sg.Button("zadat ručně"), sg.Push()],
+          [sg.Push(), sg.FileBrowse("Načíst ze soboru"), sg.Push()],
+          [sg.Text("")],
+          [sg.Button("Zavřít"), sg.Push(),sg.Button("Cancel")])
 
-window = sg.Window("Label maker", layout, size=(300, 200))
+window = sg.Window("Label maker", layout, size=(300, 250))
 while True:
     event, values = window.read()
-    if event == "Cancel" or event == sg.WIN_CLOSED:
+    if event == "Cancel" or event == "Zavřít" or event == sg.WIN_CLOSED:
         break
     elif event == "zadat ručně":
         forma_choises = ["gtt", "sir", "sol"]
@@ -32,12 +34,17 @@ while True:
             if event == "Cancel" or event == sg.WIN_CLOSED:
                 break
             elif event == "Ulož":
-                print("zadáno")
+                #  TODO export?
+                print("zadáno", values)
             elif event == "Další záznam":
                 # uložý co je napsáno a vyprázdní okýnka
+                #  TODO najít způsob, jak vyprázdnit chlívečky
                 print("další záznam")
 
         window.close()
+
+    elif event == "Načíst ze souboru":
+        print("načteno a vyrobeno")
 
 window.close()
 
